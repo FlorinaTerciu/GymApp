@@ -1,0 +1,9 @@
+.root{
+	-fx-background-image: url("gymapp11.jpg")  no-repeat center center fixed;
+	-fx-background-size: cover;
+}
+
+img {
+  width: 100%;
+  height: auto;
+}
