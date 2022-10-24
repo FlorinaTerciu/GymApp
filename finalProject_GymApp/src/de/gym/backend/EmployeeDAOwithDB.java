@@ -105,18 +105,33 @@ public class EmployeeDAOwithDB implements EmployeeDAO {
 	 * @return
 	 */
 	private String passwordEncryptionSHA(String pass) {
-		MessageDigest digest;
-		byte[] hash;
-		try {
-			//choose the message digest algorithm
-			digest = MessageDigest.getInstance("SHA-256");
-			//conversion of the String into bytes
-			hash = digest.digest(pass.getBytes(StandardCharsets.UTF_8));
-			//return the hashed password as String
-			return new String(hash);
-		} catch (NoSuchAlgorithmException exception) {
-			exception.printStackTrace();
-		}
-		return null;
+//		MessageDigest digest;
+//		byte[] hash;
+//		try {
+//			//choose the message digest algorithm
+//			digest = MessageDigest.getInstance("SHA-256");
+//			//conversion of the String into bytes
+//			hash = digest.digest(pass.getBytes(StandardCharsets.UTF_8));
+//			//return the hashed password as String
+//			return new String(hash);
+//		} catch (NoSuchAlgorithmException exception) {
+//			exception.printStackTrace();
+//		}
+//		return null;
+		
+		 try{
+		        final MessageDigest digest = MessageDigest.getInstance("SHA-256");
+		        final byte[] hash = digest.digest(pass.getBytes("UTF-8"));
+		        final StringBuilder hexString = new StringBuilder();
+		        for (int i = 0; i < hash.length; i++) {
+		            final String hex = Integer.toHexString(0xff & hash[i]);
+		            if(hex.length() == 1) 
+		              hexString.append('0');
+		            hexString.append(hex);
+		        }
+		        return hexString.toString();
+		    } catch(Exception ex){
+		       throw new RuntimeException(ex);
+		    }
 	}
 }
